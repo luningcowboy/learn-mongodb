@@ -51,6 +51,7 @@ local
 | 主键 | 主键(MongoDB提供了key为_id) |
 
 数据库服务端和客户端
+
 | RDBMS | MongoDB |
 |-------|---------|
 | Mysqlq/Oracle | mongod |
