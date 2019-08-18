@@ -39,8 +39,8 @@ local
 - local: 这个数据永远不会被复制，可以用了存储限于本地单台服务器到任意集合
 - config: 当Mongo用于分片设置时， config数据库在内部使用，用于保存分片相关到信息。
 ## 文档(Document)
-文档是一组键值对(key-value)(即BSON)
-关系型数据库(RDBMS)和MongoDB的区别:
+文档是一组键值对(key-value)(即BSON) 关系型数据库(RDBMS)和MongoDB的区别:
+
 | RDBMS | MongoDB |
 |-------|---------|
 | 数据库 | 数据库 |
@@ -49,6 +49,7 @@ local
 | 列 | 字段 |
 | 表联合 | 嵌入文档 |
 | 主键 | 主键(MongoDB提供了key为_id) |
+
 数据库服务端和客户端
 | RDBMS | MongoDB |
 |-------|---------|
