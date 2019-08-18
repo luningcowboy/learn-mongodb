@@ -139,3 +139,171 @@ newObject.str
 ```shell
 use DATABASE_NAME
 ```
+### 实例
+```shell
+> use runoob
+switched to db runoob
+> db
+runoob
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+```
+我们创建完数据库后会发现`show dbs`命令并没有`runoob`命令，要显示他需要向`runoob`数据库中插入一些数据.
+```shell
+> db.runoob.insert({"name":"菜鸟教程"})
+WriteResult({ "nInserted" : 1 })
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+runoob  0.000GB
+```
+**注意:在MongoDB中，集合只有在内容插入后才会创建，也就是说，创建集合后要再插入一个文档记录，集合才真正的创建**
+
+## 删除数据库
+语法:
+```shell
+db.dropDatabase()
+```
+### 实例
+```shell
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+runoob  0.000GB
+> db
+runoob
+> db.dropDatabase()
+{ "dropped" : "runoob", "ok" : 1 }
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> db
+runoob
+```
+## 删除集合
+语法:
+```shell
+do.collection.drop()
+```
+### 实例
+```shell
+> use runoob
+switched to db runoob
+> db.createCollection("runoob")
+{ "ok" : 1 }
+> show tables
+runoob
+> db.runoob.drop()
+true
+> show tables
+>
+```
+## 创建集合
+语法:
+```shell
+db.createCollection(name, options)
+```
+参数说明:
+- name: 要创建的集合的名字
+- options: 可选参数，指定有关内存大小及索引的选项
+
+options参数:
+
+| 字段 | 类型 | 描述 |
+|------|------|------|
+| capped | 布尔 | 如果为true ,则创建固定集合，固定集合是指有着固定大小的集合，当达到最大值时，他会自动覆盖最早的文档。|
+| autoIndexed | 布尔 | 如果为true, 自动在_id自动创建索引，默认为false |
+| size | 数值 | 为固定集合指定一个最大值(以字节计),如果capped为true,也需要指定该字段 |
+| max | 数值 | 指定固定集合中包含文档的最大数量 |
+
+### 实例
+```shell
+> use test
+switched to db test
+> db.createCollection("runoob")
+{ "ok" : 1 }
+> show collections
+runoob
+> show tables
+runoob
+> db.createCollection("mycol",{capped : true, autoIndexId: true, size : 6142800, max: 10000})
+{
+	"note" : "the autoIndexId option is deprecated and will be removed in a future release",
+	"ok" : 1
+}
+> show tables
+mycol
+runoob
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+test    0.000GB
+```
+在MongoDB中，你不需要创建集合，当你插入文档时，MongoDB会自动创建集合:
+```shell
+> db.mycol2.insert({"name": "菜鸟教程"})
+WriteResult({ "nInserted" : 1 })
+> show tables
+mycol
+mycol2
+runoob
+```
+
+## 删除集合
+语法:
+```shell
+db.collection.drop()
+```
+### 实例
+```shell
+> show collections
+mycol
+mycol2
+runoob
+> db.mycol2.drop()
+true
+> show collections
+mycol
+runoob
+```
+
+## 插入文档
+语法:
+MongoDB中用`insert()`或`save()`方法向集合中插入文档:
+```shell
+db.COLLECITON_NAME.insert(document)
+```
+### 实例
+```shell
+> db.col.insert({title:'MongoDB 教程', description: 'MongoDB是一个Nosql数据库', by:'菜鸟教程', url:'http://www.runoob.com', tags:['mongodb','database','NoSQL'], likes:100})
+WriteResult({ "nInserted" : 1 })
+> db.col.find()
+{ "_id" : ObjectId("5d598302de7bfb1757ed9e81"), "title" : "MongoDB 教程", "description" : "MongoDB是一个Nosql数据库", "by" : "菜鸟教程", "url" : "http://www.runoob.com", "tags" : [ "mongodb", "database", "NoSQL" ], "likes" : 100 }
+```
+```shell
+> document = ({title:'MongoDB 教程', description: 'MongoDB是一个Nosql数据库',by: '菜鸟教程', url:'http://www.runoob.com', tags:['mongodb','database','NoSQL'],likes:100})
+{
+	"title" : "MongoDB 教程",
+	"description" : "MongoDB是一个Nosql数据库",
+	"by" : "菜鸟教程",
+	"url" : "http://www.runoob.com",
+	"tags" : [
+		"mongodb",
+		"database",
+		"NoSQL"
+	],
+	"likes" : 100
+}
+> db.col.insert(document)
+WriteResult({ "nInserted" : 1 })
+> db.col.find()
+{ "_id" : ObjectId("5d598302de7bfb1757ed9e81"), "title" : "MongoDB 教程", "description" : "MongoDB是一个Nosql数据库", "by" : "菜鸟教程", "url" : "http://www.runoob.com", "tags" : [ "mongodb", "database", "NoSQL" ], "likes" : 100 }
+{ "_id" : ObjectId("5d5983aede7bfb1757ed9e82"), "title" : "MongoDB 教程", "description" : "MongoDB是一个Nosql数据库", "by" : "菜鸟教程", "url" : "http://www.runoob.com", "tags" : [ "mongodb", "database", "NoSQL" ], "likes" : 100 }
+>
+```
