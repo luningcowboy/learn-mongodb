@@ -92,8 +92,10 @@ Caped collection就是固定大小的collection.
 - 删除之后，你必须显式的重新创建这个collection
 - 在32bit的机器中，capped collection最大存储为1e9个字节
 ## 元数据
+
 数据库的信息是存储在集合中，它们使用了系统的名称空间:`dbname.system.*`
 在MongoDB数据库中名字空间`<dbname>.system.*`是包含多种系统信息的特殊集合(collection),如下:
+
 | 集合命名空间 | 描述 |
 |--------------|------|
 | dbname.system.namespace | 列出所有名字空间 |
@@ -101,7 +103,9 @@ Caped collection就是固定大小的collection.
 | dbname.system.profile | 包含数据库概要(profile)信息 |
 | dbname.system.users | 列出所有可访问数据库的用户 |
 | dbname.local.sources | 包含复制对端(slave)的服务器信息和状态 |
+
 ## MongoDB数据类型
+
 | 数据类型 | 描述 |
 |----------|------|
 | String | 字符串， 存储数据常用类型，在MongoDB中，UTF-8编码的字符串才是合法的 |
