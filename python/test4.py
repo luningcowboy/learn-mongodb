@@ -39,3 +39,14 @@ myquery = {"name":{"$gt":"H"}}
 mydoc = mycol.find(myquery)
 for x in mydoc:
     print(x)
+# 正则表达式查询
+print("******************")
+myquery = {"name":{"$regex":"^r"}}
+mydoc = mycol.find(myquery)
+for x in mydoc:
+    print(x)
+# 返回指定条数的记录
+print("******************")
+myresult = mycol.find().limit(3)
+for x in myresult:
+    print(x)
